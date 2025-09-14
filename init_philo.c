@@ -42,7 +42,10 @@ void	philo_routine(void *ptr)
 		if (philo->data->n_philos == 1
 			|| display_status(philo, " is sleeping\n"))
 			break ;
-		ft_usleep(philo->data->sleep_time);
+		if (philo->data->sleep_time)
+			ft_usleep(philo->data->sleep_time);
+		else
+			ft_usleep(1);
 		if (philo->data->n_philos == 1
 			|| display_status(philo, " is thinking\n"))
 			break ;
