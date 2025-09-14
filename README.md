@@ -9,29 +9,29 @@
 
 ## 📚 Project Overview
 
-The **Philosophers Dining** project is a classical concurrency problem in computer science. It simulates a scenario where several philosophers sit around a table, each alternating between thinking and eating. Between each pair of philosophers is a single fork, and a philosopher needs **both forks** (the one on the left and the one on the right) to eat.
+The **Philosophers Dining** project is a classical concurrency problem in computer science. It simulates a scenario where several philosophers sit around a table, each alternating between eating, sleeping and thinking. Between each pair of philosophers is a single fork, and a philosopher needs **both forks** (the one on the left and the one on the right) to eat.
 
-The goal is to implement a program that simulates this behavior using **processes or threads** with mutexes to avoid **deadlocks** and **race conditions**.
+The goal is to implement a program that simulates this behavior using **threads** with **mutexes** to avoid **deadlocks** and **race conditions**.
+
 ---
 
 ## 🎯 Objectives
 
 - Understand and implement synchronization mechanisms to handle resource sharing.  
-- Prevent deadlocks and starvation, ensuring every philosopher can eat.  
-- Use system calls and primitives for inter-process or inter-thread communication.  
+- Prevent deadlocks and starvation, ensuring every philosopher can eat.    
 - Implement timed actions and state monitoring.  
 - Handle program termination and cleanup gracefully.
 
 ---
 
 ## 📝 Project Requirements
-- Philosophers should be represented by threads or processes.  
+- Philosophers should be represented by threads.  
 - Each philosopher cycles through:  
   - **Thinking**   
   - **Taking forks (left and right)**  
   - **Eating** 
   - **Sleeping**  
-- The program should output timestamps and state changes for each philosopher (e.g., "Philosopher 3 has taken a fork", "Philosopher 2 is eating").  
+- The program should output timestamps and state changes for each philosopher (e.g., "[Time ms] [Philosopher id] has taken a fork", "[Time ms] [Philsopher id] is eating").  
 - Use synchronization to avoid:  
   - Deadlocks (where philosophers wait forever).  
   - Starvation (where a philosopher never gets to eat).  
