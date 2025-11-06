@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/03 09:50:16 by zali              #+#    #+#             */
+/*   Updated: 2025/11/06 15:45:43 by zali             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 # ifndef MAX_LIMIT
@@ -49,19 +61,20 @@ int				ft_isdigit(char c);
 // Utils
 int				display_status(t_philo *philo, char *str);
 void			clean_up(t_data *data);
-void			ft_usleep(size_t ms);
+int				clean_up_threads(t_data *data, int erri);
+void			ft_usleep(t_data *data, size_t ms);
 
 // Inits
-void			init_data(char **argv, t_data *data,
+int				init_data(char **argv, t_data *data,
 					pthread_mutex_t *forks, t_philo *philos);
-void			init_philos(t_data *data);
+int				init_philos(t_data *data);
 void			philo_routine(void *ptr);
 
 // Begin Dinner
-void			initiate(t_data *data);
+int				initiate(t_data *data);
 
 // Safe Calls
-void			safe_create_thread(pthread_t *addr,
-					void *routine, void *ptr, t_data *data);
-void			safe_mutex_init(pthread_mutex_t	*mutex, t_data *data);
+int				safe_create_thread(pthread_t *addr,
+					void *routine, void *ptr);
+int				error_exit(char *errmsg);
 #endif

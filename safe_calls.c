@@ -1,22 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   safe_calls.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/03 09:50:22 by zali              #+#    #+#             */
+/*   Updated: 2025/11/06 11:04:39 by zali             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void	safe_mutex_init(pthread_mutex_t	*mutex, t_data *data)
+int	error_exit(char *errmsg)
 {
-	if (pthread_mutex_init(mutex, NULL))
-	{
-		clean_up(data);
-		perror("mutex init fail");
-		exit(EXIT_FAILURE);
-	}
+	ft_putstr_fd(errmsg, 2);
+	return (1);
 }
 
-void	safe_create_thread(pthread_t *addr,
-			void *routine, void *ptr, t_data *data)
+int	safe_create_thread(pthread_t *addr,
+			void *routine, void *ptr)
 {
 	if (pthread_create(addr, NULL, routine, ptr) != 0)
 	{
-		clean_up(data);
-		perror("thread create fail\n");
-		exit(EXIT_FAILURE);
+		ft_putstr_fd("thread create fail\n", 2);
+		return (1);
 	}
+	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initiate.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/03 09:50:35 by zali              #+#    #+#             */
+/*   Updated: 2025/11/06 16:01:24 by zali             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static int	philo_full(t_philo *philo)
@@ -16,7 +28,7 @@ int	philo_dead(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->data->mutex_stop);
 		printf("\33[31m%ld\t%i\t died\33[0m\n",
-			get_current_time() - philo->data->start_time, philo->id);
+			get_current_time() - philo->data->start_time, philo->id + 1);
 		return (1);
 	}
 	return (0);
@@ -65,18 +77,26 @@ void	monitor_philos(void *ptr)
 	}
 }
 
-void	initiate(t_data *data)
+int	initiate(t_data *data)
 {
 	int			i;
 	pthread_t	monitor;
 
 	i = -1;
 	while (++i < data->n_philos)
-		safe_create_thread(&data->philos[i].thread,
-			philo_routine, (void *)&data->philos[i], data);
-	safe_create_thread(&monitor, monitor_philos, (void *)data, data);
-	pthread_join(monitor, NULL);
+		if (safe_create_thread(&data->philos[i].thread,
+				philo_routine, (void *)&data->philos[i]))
+			return (clean_up_threads(data, i));
+	if (safe_create_thread(&monitor, monitor_philos, (void *)data))
+		return (clean_up_threads(data, i));
+	if (pthread_join(monitor, NULL))
+	{
+		clean_up_threads(data, i);
+		return (error_exit("pthread_join fail\n"));
+	}
 	i = -1;
 	while (++i < data->n_philos)
-		pthread_join(data->philos[i].thread, NULL);
+		if (pthread_join(data->philos[i].thread, NULL))
+			return (error_exit("pthread_join fail\n"));
+	return (0);
 }

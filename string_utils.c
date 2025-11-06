@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zali <zali@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/03 09:50:26 by zali              #+#    #+#             */
+/*   Updated: 2025/11/06 15:46:58 by zali             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	ft_isdigit(char c)
@@ -26,7 +38,7 @@ int	get_valid_num(char *str)
 		{
 			ft_putstr_fd("\033[31m[ERROR]\033[0m only"
 				"positive int range is accepted.\n", 2);
-			exit(EXIT_FAILURE);
+			return (-1);
 		}
 		total *= 10;
 		total += *str - '0';
@@ -34,7 +46,7 @@ int	get_valid_num(char *str)
 		{
 			ft_putstr_fd("\033[31m[ERROR]\033[0m only"
 				" positive int range is accepted.\n", 2);
-			exit(EXIT_FAILURE);
+			return (-1);
 		}
 		str++;
 	}
